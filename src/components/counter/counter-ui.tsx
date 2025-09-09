@@ -3,13 +3,13 @@
 import { Keypair, PublicKey } from '@solana/web3.js'
 import { useMemo } from 'react'
 import { ExplorerLink } from '../cluster/cluster-ui'
-import { useCounterProgram, useCounterProgramAccount } from './counter-data-access'
+import { usecrud_appProgram, usecrud_appProgramAccount } from './crud_app-data-access'
 import { ellipsify } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card'
 
-export function CounterCreate() {
-  const { initialize } = useCounterProgram()
+export function crud_appCreate() {
+  const { initialize } = usecrud_appProgram()
 
   return (
     <Button onClick={() => initialize.mutateAsync(Keypair.generate())} disabled={initialize.isPending}>
@@ -18,8 +18,8 @@ export function CounterCreate() {
   )
 }
 
-export function CounterList() {
-  const { accounts, getProgramAccount } = useCounterProgram()
+export function crud_appList() {
+  const { accounts, getProgramAccount } = usecrud_appProgram()
 
   if (getProgramAccount.isLoading) {
     return <span className="loading loading-spinner loading-lg"></span>
@@ -38,7 +38,7 @@ export function CounterList() {
       ) : accounts.data?.length ? (
         <div className="grid md:grid-cols-2 gap-4">
           {accounts.data?.map((account) => (
-            <CounterCard key={account.publicKey.toString()} account={account.publicKey} />
+            <crud_appCard key={account.publicKey.toString()} account={account.publicKey} />
           ))}
         </div>
       ) : (
@@ -51,8 +51,8 @@ export function CounterList() {
   )
 }
 
-function CounterCard({ account }: { account: PublicKey }) {
-  const { accountQuery, incrementMutation, setMutation, decrementMutation, closeMutation } = useCounterProgramAccount({
+function crud_appCard({ account }: { account: PublicKey }) {
+  const { accountQuery, incrementMutation, setMutation, decrementMutation, closeMutation } = usecrud_appProgramAccount({
     account,
   })
 
@@ -63,7 +63,7 @@ function CounterCard({ account }: { account: PublicKey }) {
   ) : (
     <Card>
       <CardHeader>
-        <CardTitle>Counter: {count}</CardTitle>
+        <CardTitle>crud_app: {count}</CardTitle>
         <CardDescription>
           Account: <ExplorerLink path={`account/${account}`} label={ellipsify(account.toString())} />
         </CardDescription>

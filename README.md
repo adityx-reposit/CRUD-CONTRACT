@@ -23,11 +23,7 @@ pnpm create solana-dapp@latest -t gh:solana-foundation/templates/web3js/crud_app
 pnpm install
 ```
 
-## Apps
 
-### anchor
-
-This is a Solana program written in Rust using the Anchor framework.
 
 #### Commands
 
